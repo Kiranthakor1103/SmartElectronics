@@ -1,12 +1,33 @@
 # SmartElectronics — Multi-Vendor E-Commerce Platform
 
-SmartElectronics is a high-performance, enterprise-grade e-commerce application built with Next.js 16 (App Router), Node.js / Express, TypeScript, MongoDB, and Redis.
+[![Next.js](https://img.shields.io/badge/Next.js-16%20App%20Router-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge&logo=express)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+
+> **SmartElectronics** is a high-performance, enterprise-grade full-stack MERN e-commerce application built with Next.js 16 (App Router), Node.js / Express, TypeScript, MongoDB, and Redis caching. It features a responsive customer storefront, a real-time admin management portal, role-based access control, cart & checkout workflows, and multi-container Docker orchestration.
+
+---
+
+## 🌿 Repository Branching Structure
+
+This project follows a decoupled multi-service branching model:
+
+| Branch | Description | Included Services |
+|---|---|---|
+| **`main`** | Production-ready stable release | Complete codebase (`backend`, `frontend`, `admin`) |
+| **`development`** | Active integration branch | All merged services tested together |
+| **`devkiran-backend`** | Isolated backend development | Core REST API service (`backend/`) |
+| **`devkiran-frontend`** | Isolated customer storefront | Customer web portal (`frontend/`) |
+| **`devkiran-admin`** | Isolated admin console | Enterprise management dashboard (`admin/`) |
 
 ---
 
 ## 🏛️ System Architecture
 
-The project is organized into three decoupled services:
+The project is structured into three decoupled, independent services:
 
 ```
 SmartElectronics/
@@ -69,16 +90,21 @@ SmartElectronics/
 
 ---
 
-## ⚡ Quick Start (Development)
+## ⚡ Quick Start (Local Development)
 
-### 1. Start Backend
+### Prerequisites
+- **Node.js**: `v20.x` or higher
+- **MongoDB**: Running locally or via MongoDB Atlas
+- **Redis**: Running locally or via Docker
+
+### 1. Start Backend API
 ```bash
 cd backend
 npm install
 npm run dev
 ```
 
-### 2. Start Admin Console
+### 2. Start Admin Dashboard
 ```bash
 cd admin
 npm install
@@ -96,7 +122,18 @@ npm run dev
 
 ## 🐳 Docker Deployment
 
-Run the entire stack with a single command:
+To launch the full-stack system with MongoDB and Redis using Docker Compose:
+
 ```bash
 docker-compose up --build -d
 ```
+
+To stop all running containers:
+```bash
+docker-compose down
+```
+
+---
+
+## 📄 License
+This project is licensed under the MIT License.
