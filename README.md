@@ -76,8 +76,8 @@ SmartElectronics/
 | **Customer Storefront** | Next.js 16 App Router | `3000` | [http://localhost:3000](http://localhost:3000) |
 | **Admin Console** | Next.js 16 App Router | `3001` | [http://localhost:3001](http://localhost:3001) |
 | **REST API Backend** | Express.js & TypeScript | `5000` | [http://localhost:5000/api](http://localhost:5000/api) |
-| **Database** | MongoDB 7.0 | `27017` | `mongodb://localhost:27017/smartelectronic` |
-| **Cache Store** | Redis 7.0 Alpine | `6379` | `redis://localhost:6379` |
+| **Database** | MongoDB 7.0 
+| **Cache Store** | Redis 7.0 Alpine
 
 ---
 
