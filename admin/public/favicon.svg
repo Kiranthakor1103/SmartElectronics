@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Background Gradient (Command Slate / Dark Indigo) -->
+    <linearGradient id="adm-grad-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#020617" />
+      <stop offset="50%" stop-color="#090d16" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+
+    <!-- Edge Glow Gradient (Cobalt / Cyan / Violet) -->
+    <linearGradient id="adm-grad-edge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="50%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+
+    <!-- Shield / Hexagon Gradient -->
+    <linearGradient id="adm-shield-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.95" />
+    </linearGradient>
+
+    <!-- Bolt Gradient -->
+    <linearGradient id="adm-bolt-l" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="40%" stop-color="#93c5fd" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+
+    <linearGradient id="adm-bolt-r" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60a5fa" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+
+    <!-- Admin Badge Gradient (Vibrant Cyan / Blue / Indigo) -->
+    <linearGradient id="adm-badge-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="50%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#6366f1" />
+    </linearGradient>
+
+    <!-- Glow Filter -->
+    <filter id="adm-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="14" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <filter id="adm-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.6" />
+    </filter>
+  </defs>
+
+  <!-- Base Rounded Container (Squircle) -->
+  <rect x="20" y="20" width="472" height="472" rx="120" fill="url(#adm-grad-bg)" filter="url(#adm-shadow)" />
+
+  <!-- Outer Bezel Glow -->
+  <rect x="20" y="20" width="472" height="472" rx="120" fill="none" stroke="url(#adm-grad-edge)" stroke-width="14" />
+
+  <!-- Tech Hexagon / Shield Frame -->
+  <polygon points="256,52 396,132 396,288 256,368 116,288 116,132"
+           fill="url(#adm-shield-grad)" stroke="#38bdf8" stroke-width="5" stroke-opacity="0.5" />
+
+  <!-- Corner Security / Admin Nodes -->
+  <circle cx="256" cy="52" r="8" fill="#38bdf8" stroke="#ffffff" stroke-width="2" />
+  <circle cx="396" cy="132" r="7" fill="#60a5fa" stroke="#ffffff" stroke-width="2" />
+  <circle cx="396" cy="288" r="7" fill="#60a5fa" stroke="#ffffff" stroke-width="2" />
+  <circle cx="256" cy="368" r="8" fill="#38bdf8" stroke="#ffffff" stroke-width="2" />
+  <circle cx="116" cy="288" r="7" fill="#60a5fa" stroke="#ffffff" stroke-width="2" />
+  <circle cx="116" cy="132" r="7" fill="#60a5fa" stroke="#ffffff" stroke-width="2" />
+
+  <!-- Circuit Connector Lines -->
+  <line x1="75" y1="210" x2="116" y2="210" stroke="#38bdf8" stroke-width="5" stroke-opacity="0.6" stroke-linecap="round" />
+  <circle cx="75" cy="210" r="7" fill="#38bdf8" />
+  <line x1="437" y1="210" x2="396" y2="210" stroke="#38bdf8" stroke-width="5" stroke-opacity="0.6" stroke-linecap="round" />
+  <circle cx="437" cy="210" r="7" fill="#38bdf8" />
+
+  <!-- Glowing Aura behind bolt -->
+  <path d="M 276 82 L 192 224 L 255 224 L 232 344 L 324 210 L 265 210 Z"
+        fill="#3b82f6" opacity="0.45" filter="url(#adm-glow)" />
+
+  <!-- Admin Central SmartElectronics Bolt -->
+  <path d="M 276 82 L 192 224 L 255 224 L 232 344 L 255 216 Z"
+        fill="url(#adm-bolt-l)" />
+  <path d="M 276 82 L 255 216 L 232 344 L 324 210 L 265 210 Z"
+        fill="url(#adm-bolt-r)" />
+
+  <!-- Core White Flash -->
+  <polygon points="270,105 220,218 258,218 242,305 298,214 264,214"
+           fill="#ffffff" opacity="0.9" />
+
+  <!-- ADMIN Console Lower Badge Pill -->
+  <g transform="translate(0, 396)">
+    <rect x="136" y="0" width="240" height="56" rx="28" fill="url(#adm-badge-grad)" />
+    <rect x="139" y="3" width="234" height="50" rx="25" fill="#020617" opacity="0.92" />
+    <text x="256" y="37"
+          fill="#38bdf8"
+          font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+          font-size="24"
+          font-weight="900"
+          letter-spacing="5"
+          text-anchor="middle">ADMIN</text>
+  </g>
+</svg>
