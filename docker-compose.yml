@@ -1,0 +1,141 @@
+version: '3.8'
+
+networks:
+  smartelectronics-net:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+    driver: local
+  redis_data:
+    driver: local
+  backend_uploads:
+    driver: local
+
+services:
+  # ── 1. Database: MongoDB 7 ──
+  mongodb:
+    image: mongo:7.0
+    container_name: smartelectronics-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: smartelectronic
+    networks:
+      - smartelectronics-net
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # ── 2. Cache: Redis 7 Alpine ──
+  redis:
+    image: redis:7-alpine
+    container_name: smartelectronics-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: ["redis-server", "--appendonly", "yes"]
+    networks:
+      - smartelectronics-net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  # ── 3. API Backend: Node.js Express & TypeScript ──
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: smartelectronics-backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      PORT: 5000
+      NODE_ENV: production
+      MONGODB_URI: mongodb://mongodb:27017/smartelectronic
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: kt_enterprise_super_secret_jwt_2026
+      JWT_ACCESS_SECRET: kt_enterprise_super_secret_jwt_2026
+      JWT_REFRESH_SECRET: kt_enterprise_super_secret_refresh_2026
+      CLIENT_URL: http://localhost:3000
+      ALLOWED_ORIGINS: http://localhost:3000,http://localhost:3001,http://frontend:3000,http://admin:3001
+      FROM_EMAIL: noreply@smartelectronic.com
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - backend_uploads:/app/uploads
+    networks:
+      - smartelectronics-net
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:5000/api/products"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  # ── 4. Customer Storefront: Next.js 16 (Port 3000) ──
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: smartelectronics-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      NODE_ENV: production
+      BACKEND_INTERNAL_URL: http://backend:5000
+      NEXT_PUBLIC_API_URL: http://localhost:5000/api
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - smartelectronics-net
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  # ── 5. Enterprise Admin Panel: Next.js 16 (Port 3001) ──
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+    container_name: smartelectronics-admin
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      PORT: 3001
+      NODE_ENV: production
+      BACKEND_INTERNAL_URL: http://backend:5000
+      NEXT_PUBLIC_API_URL: http://localhost:5000/api
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - smartelectronics-net
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3001/"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 30s

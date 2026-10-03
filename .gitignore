@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build Outputs
+.next/
+out/
+dist/
+build/
+tsconfig.tsbuildinfo
+
+# Environment Variables (Keep secrets safe)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+!.env.example
+
+# Runtime & Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+logs/
+*.log
+
+# Uploads & User Media (stored locally in dev)
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Testing & Coverage
+coverage/
+playwright-report/
+test-results/
+.nyc_output/
+
+# IDE & OS Metadata
+.DS_Store
+*.pem
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+# Scripts
+setup-*.ps1
+setup-*.bat
